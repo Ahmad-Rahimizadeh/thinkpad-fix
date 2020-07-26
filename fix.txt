@@ -1,3 +1,25 @@
-run the following command on terminal:
-		echo XHC | sudo tee /proc/acpi/wakeup
-hope to fix :)
+I have used this laptop.
+
+It's somewhat wonky because I'll put it to sleep only for it to come back up again. The trackpad will sometimes lockup or not work at all until a reboot.
+
+I have made a systemd unit file to help with the sleeping issue if it happens to you. I have experienced this on Ubuntu, not Arch though.
+
+Place this in /etc/systemd/system/tp-yoga-wakeup.service
+
+
+
+[Unit]
+Description=ThinkPad Yoga Wakeup Service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "echo XHC > /proc/acpi/wakeup"
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+Then run sudo systemctl enable tp-yoga-wakeup.service for it to start across reboots.
+
